@@ -13,13 +13,21 @@
     {
       "name": "search-bookmark",
       "title": "Search Bookmark",
-      "description": "Search website from Hatena bookmark",
+      "description": "Search website from your Hatena bookmark",
       "mode": "view"
+    },
+    {
+      "name": "configure",
+      "title": "Configure",
+      "description": "Configure username and apikey",
+      "mode": "view",
+      "icon": "./assets/extension-icon.png"
     }
   ],
   "dependencies": {
     "@raycast/api": "^1.94.0",
-    "@raycast/utils": "^1.17.0"
+    "@raycast/utils": "^1.17.0",
+    "wsse": "^6.0.0"
   },
   "devDependencies": {
     "@raycast/eslint-config": "^2.0.4",
