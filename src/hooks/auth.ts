@@ -1,6 +1,5 @@
 import { createContext, useContext } from "react";
 
-
 export const AuthorizationContext = createContext<{
   username: string | undefined;
   apikey: string | undefined;
@@ -15,6 +14,6 @@ export const useAuth = () => {
   return {
     username,
     apikey,
-    hasAuthInfo
+    hasAuthInfo,
   };
-}
+};

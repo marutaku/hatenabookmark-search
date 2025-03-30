@@ -31,8 +31,20 @@ export default function ConfigureCommand() {
         </ActionPanel>
       }
     >
-      <Form.TextField id="username" title="Username" defaultValue={username} placeholder="Enter your username" />
-      <Form.TextField id="apikey" title="API Key" defaultValue={apikey} placeholder="Enter your API key" />
+      <Form.TextField
+        id="username"
+        title="Username"
+        value={username}
+        onChange={setUsername}
+        placeholder="Enter your username"
+      />
+      <Form.TextField
+        id="apikey"
+        title="API Key"
+        value={apikey}
+        onChange={setApikey}
+        placeholder="Enter your API key"
+      />
       <Form.Description text="Please enter your Hatena Bookmark credentials." />
     </Form>
   );

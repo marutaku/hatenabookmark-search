@@ -1,4 +1,4 @@
-import { ActionPanel, Action, Icon, List, Toast, showToast } from "@raycast/api";
+import { ActionPanel, Action, Icon, List } from "@raycast/api";
 import { AuthorizationProvider } from "./providers/authentication";
 import { useHantenaFullTextSearch } from "./hooks/search";
 import { useAuth } from "./hooks/auth";
@@ -7,13 +7,11 @@ import { useState } from "react";
 const SearchList = () => {
   const { username, apikey } = useAuth();
   const [query, setQuery] = useState("");
-  const { bookmarks, search } = useHantenaFullTextSearch(username, apikey);
-  const handleOnSearch = async () => {
+  const { bookmarks, search, reset } = useHantenaFullTextSearch(username, apikey);
+  const handleOnSearch = async (query: string) => {
+    setQuery(query);
     if (!query) {
-      showToast({
-        style: Toast.Style.Failure,
-        title: "Please enter a search query",
-      });
+      reset();
       return;
     }
     await search(query);
@@ -22,11 +20,13 @@ const SearchList = () => {
     <AuthorizationProvider>
       <List
         searchText={query}
-        onSearchTextChange={setQuery}
+        onSearchTextChange={handleOnSearch}
+        throttle={true}
+        filtering={false}
         navigationTitle="Search Hatena Bookmark"
         actions={
           <ActionPanel>
-            <Action title="Search" onAction={handleOnSearch} />
+            <Action title="Search" onAction={() => handleOnSearch(query)} />
           </ActionPanel>
         }
       >

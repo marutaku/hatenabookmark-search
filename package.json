@@ -1,8 +1,8 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "hatena-bookmark",
-  "title": "hatena-bookmark",
-  "description": "",
+  "title": "Hatena-bookmark",
+  "description": "Extension for Hatena Bookmark",
   "icon": "extension-icon.png",
   "author": "satouredstone",
   "categories": [
@@ -14,20 +14,20 @@
       "name": "search-bookmark",
       "title": "Search Bookmark",
       "description": "Search website from your Hatena bookmark",
-      "mode": "view"
+      "mode": "view",
+      "icon": "extension-icon.png"
     },
     {
       "name": "configure",
       "title": "Configure",
       "description": "Configure username and apikey",
       "mode": "view",
-      "icon": "./assets/extension-icon.png"
+      "icon": "extension-icon.png"
     }
   ],
   "dependencies": {
     "@raycast/api": "^1.94.0",
-    "@raycast/utils": "^1.17.0",
-    "wsse": "^6.0.0"
+    "@raycast/utils": "^1.17.0"
   },
   "devDependencies": {
     "@raycast/eslint-config": "^2.0.4",

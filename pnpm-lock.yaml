@@ -14,9 +14,6 @@ importers:
       '@raycast/utils':
         specifier: ^1.17.0
         version: 1.19.1(@raycast/api@1.94.2(@types/node@22.13.10)(@types/react@19.0.10))
-      wsse:
-        specifier: ^6.0.0
-        version: 6.0.0
     devDependencies:
       '@raycast/eslint-config':
         specifier: ^2.0.4
@@ -1064,9 +1061,6 @@ packages:
     resolution: {integrity: sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==}
     engines: {node: '>=10'}
 
-  wsse@6.0.0:
-    resolution: {integrity: sha512-eh8pBw/k/tTciRZxXlZEkVmBZc8cxK/jR8reO5GOac9+tC0lqvBW2Mk+ohGEmwturGohWh7DRtALtbyoDLvkUA==}
-
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
@@ -2058,8 +2052,6 @@ snapshots:
       ansi-styles: 4.3.0
       string-width: 4.2.3
       strip-ansi: 6.0.1
-
-  wsse@6.0.0: {}
 
   yocto-queue@0.1.0: {}
 
