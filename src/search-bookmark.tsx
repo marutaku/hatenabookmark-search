@@ -7,7 +7,7 @@ import { useState } from "react";
 const SearchList = () => {
   const { username, apikey } = useAuth();
   const [query, setQuery] = useState("");
-  const { bookmarks, search, reset } = useHantenaFullTextSearch(username, apikey);
+  const { bookmarks, search, reset } = useHantenaFullTextSearch(username!, apikey!);
 
   const handleOnSearch = async (query: string) => {
     setQuery(query);
@@ -19,34 +19,32 @@ const SearchList = () => {
   };
 
   return (
-    <AuthorizationProvider>
-      <List
-        searchText={query}
-        onSearchTextChange={handleOnSearch}
-        throttle={true}
-        filtering={false}
-        navigationTitle="Search Hatena Bookmark"
-        actions={
-          <ActionPanel>
-            <Action title="Search" onAction={() => handleOnSearch(query)} />
-          </ActionPanel>
-        }
-      >
-        {bookmarks.map(({ entry }) => (
-          <List.Item
-            key={entry.eid}
-            title={entry.title}
-            subtitle={entry.url}
-            icon={Icon.Link}
-            actions={
-              <ActionPanel>
-                <Action.OpenInBrowser url={entry.url} />
-              </ActionPanel>
-            }
-          />
-        ))}
-      </List>
-    </AuthorizationProvider>
+    <List
+      searchText={query}
+      onSearchTextChange={handleOnSearch}
+      throttle={true}
+      filtering={false}
+      navigationTitle="Search Hatena Bookmark"
+      actions={
+        <ActionPanel>
+          <Action title="Search" onAction={() => handleOnSearch(query)} />
+        </ActionPanel>
+      }
+    >
+      {bookmarks.map(({ entry }) => (
+        <List.Item
+          key={entry.eid}
+          title={entry.title}
+          subtitle={entry.url}
+          icon={Icon.Link}
+          actions={
+            <ActionPanel>
+              <Action.OpenInBrowser url={entry.url} />
+            </ActionPanel>
+          }
+        />
+      ))}
+    </List>
   );
 };
 

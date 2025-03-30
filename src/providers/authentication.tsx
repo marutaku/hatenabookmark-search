@@ -1,4 +1,4 @@
-import { Detail, LocalStorage } from "@raycast/api";
+import { Detail, LocalStorage, ActionPanel, Action } from "@raycast/api";
 import { useState, useEffect } from "react";
 import { API_KEY_STORE_KEY, USER_NAME_STORE_KEY } from "../const";
 import { AuthorizationContext } from "../hooks/auth";
@@ -36,7 +36,19 @@ export const AuthorizationProvider: React.FC<{ children: React.ReactNode }> = ({
   }
 
   if (!username || !apikey) {
-    return <div>Please authorize the app to access your account.</div>;
+    return (
+      <Detail
+        markdown="# 認証情報が設定されていません\n\n設定画面から以下の情報を設定してください：\n\n- はてなID\n- APIキー"
+        actions={
+          <ActionPanel>
+            <Action.Open
+              title="設定画面を開く"
+              target="raycast://extensions/marutaku/hatena-raycast/configure"
+            />
+          </ActionPanel>
+        }
+      />
+    );
   }
 
   return <AuthorizationContext.Provider value={{ username, apikey }}>{children}</AuthorizationContext.Provider>;
