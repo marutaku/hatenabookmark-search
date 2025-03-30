@@ -41,10 +41,7 @@ export const AuthorizationProvider: React.FC<{ children: React.ReactNode }> = ({
         markdown="# 認証情報が設定されていません\n\n設定画面から以下の情報を設定してください：\n\n- はてなID\n- APIキー"
         actions={
           <ActionPanel>
-            <Action.Open
-              title="設定画面を開く"
-              target="raycast://extensions/marutaku/hatena-raycast/configure"
-            />
+            <Action.Open title="設定画面を開く" target="raycast://extensions/marutaku/hatena-raycast/configure" />
           </ActionPanel>
         }
       />

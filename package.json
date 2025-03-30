@@ -23,11 +23,20 @@
       "description": "Configure username and apikey",
       "mode": "view",
       "icon": "extension-icon.png"
+    },
+    {
+      "name": "hot-entries",
+      "title": "Show Hot Entries",
+      "description": "Show Hatena Bookmark Hot Entries",
+      "mode": "view",
+      "icon": "extension-icon.png"
     }
   ],
   "dependencies": {
     "@raycast/api": "^1.94.0",
-    "@raycast/utils": "^1.17.0"
+    "@raycast/utils": "^1.17.0",
+    "fast-xml-parser": "^5.0.9",
+    "html-entities": "^2.5.5"
   },
   "devDependencies": {
     "@raycast/eslint-config": "^2.0.4",
