@@ -2,7 +2,7 @@ import { useState } from "react";
 import { callHantenaAPI } from "../lib/hatena";
 import { showToast, Toast } from "@raycast/api";
 
-const LIMIT = 20;
+export const LIMIT = 20;
 
 type Entry = {
   title: string;
@@ -34,13 +34,27 @@ type Response = {
   meta: Meta;
 };
 
-export const useHantenaFullTextSearch = (username?: string, apikey?: string) => {
+export interface SearchAPI {
+  search: (url: string, username: string, apikey: string) => Promise<Response>;
+}
+
+export const defaultSearchAPI: SearchAPI = {
+  search: async (url: string, username: string, apikey: string) => {
+    return callHantenaAPI<Response>(url, username, apikey);
+  },
+};
+
+export const useHantenaFullTextSearch = (
+  username?: string,
+  apikey?: string,
+  searchAPI: SearchAPI = defaultSearchAPI,
+) => {
   const [loading, setLoading] = useState(false);
   const [offset, setOffset] = useState(0);
   const [query, setQuery] = useState("");
   const [total, setTotal] = useState(0);
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
-  const hasNextPage = offset > 0 && offset < total;
+  const hasNextPage = total > 0 && offset < total - LIMIT;
   const hasPreviousPage = offset > 0;
 
   const handleAPIError = (error: unknown) => {
@@ -72,7 +86,7 @@ export const useHantenaFullTextSearch = (username?: string, apikey?: string) => 
     try {
       setLoading(true);
       const url = buildSearchURL(query, offset);
-      const data = await callHantenaAPI<Response>(url, username, apikey);
+      const data = await searchAPI.search(url, username, apikey);
       setBookmarks(data.bookmarks);
       setTotal(data.meta.total);
       showToast({
