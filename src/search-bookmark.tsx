@@ -8,6 +8,7 @@ const SearchList = () => {
   const { username, apikey } = useAuth();
   const [query, setQuery] = useState("");
   const { bookmarks, search, reset } = useHantenaFullTextSearch(username, apikey);
+
   const handleOnSearch = async (query: string) => {
     setQuery(query);
     if (!query) {
@@ -16,6 +17,7 @@ const SearchList = () => {
     }
     await search(query);
   };
+
   return (
     <AuthorizationProvider>
       <List
