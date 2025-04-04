@@ -18,7 +18,7 @@ describe("buildWSSEHeader", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.useFakeTimers();
-    
+
     // デフォルトのfetchレスポンスを設定
     mockFetch.mockResolvedValue({
       ok: true,
@@ -49,7 +49,7 @@ describe("buildWSSEHeader", () => {
     const username = "testuser";
     const apikey = "testapikey";
     const url = "https://api.example.com/test";
-    
+
     await callHantenaAPI(url, username, apikey);
 
     expect(crypto.randomBytes).toHaveBeenCalledWith(16);

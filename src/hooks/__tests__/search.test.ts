@@ -63,7 +63,7 @@ describe("useHantenaFullTextSearch", () => {
       expect(mockSearchAPI.search).toHaveBeenCalledWith(
         "https://b.hatena.ne.jp/my/search/json?q=test&limit=20&of=0",
         "username",
-        "apikey"
+        "apikey",
       );
       expect(result.current.bookmarks).toEqual(mockResponse.bookmarks);
       expect(mockShowToast).toHaveBeenCalledWith({
@@ -89,7 +89,7 @@ describe("useHantenaFullTextSearch", () => {
       expect(mockSearchAPI.search).toHaveBeenCalledWith(
         `https://b.hatena.ne.jp/my/search/json?q=test&limit=20&of=${LIMIT}`,
         "username",
-        "apikey"
+        "apikey",
       );
     });
 
@@ -101,7 +101,7 @@ describe("useHantenaFullTextSearch", () => {
       expect(mockSearchAPI.search).toHaveBeenCalledWith(
         "https://b.hatena.ne.jp/my/search/json?q=test&limit=20&of=0",
         "username",
-        "apikey"
+        "apikey",
       );
     });
   });

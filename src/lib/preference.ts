@@ -6,8 +6,8 @@ export const API_KEY_PREFERENCE_KEY = "apikey";
 export type Preference = {
   username?: string;
   apikey?: string;
-}
+};
 
 export const getPreference = (): Preference => {
   return getPreferenceValues<Preference>();
-}
+};
