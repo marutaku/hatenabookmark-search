@@ -1,6 +1,7 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "hatena-bookmark",
+  "version": "1.0.0",
   "title": "Hatena-bookmark",
   "description": "Extension for Hatena Bookmark",
   "icon": "extension-icon.png",
@@ -46,7 +47,7 @@
     }
   ],
   "dependencies": {
-    "@raycast/api": "^1.94.0",
+    "@raycast/api": "^1.94.3",
     "@raycast/utils": "^1.17.0",
     "fast-xml-parser": "^5.0.9",
     "html-entities": "^2.5.5"
@@ -54,8 +55,7 @@
   "devDependencies": {
     "@raycast/eslint-config": "^2.0.4",
     "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.2.0",
-    "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
     "@types/node": "22.13.10",
     "@types/react": "19.0.10",
@@ -75,10 +75,10 @@
     "dev": "ray develop",
     "fix-lint": "ray lint --fix",
     "lint": "ray lint",
+    "lint-ci": "ray lint -r",
     "prepublishOnly": "echo \"\\n\\nIt seems like you are trying to publish the Raycast extension to npm.\\n\\nIf you did intend to publish it to npm, remove the \\`prepublishOnly\\` script and rerun \\`npm publish\\` again.\\nIf you wanted to publish it to the Raycast Store instead, use \\`npm run publish\\` instead.\\n\\n\" && exit 1",
     "publish": "npx @raycast/api@latest publish",
     "test": "vitest",
     "test:coverage": "vitest run --coverage"
-  },
-  "packageManager": "pnpm@10.4.1+sha512.c753b6c3ad7afa13af388fa6d808035a008e30ea9993f58c6663e2bc5ff21679aa834db094987129aa4d488b86df57f7b634981b2f827cdcacc698cc0cfb88af"
+  }
 }
