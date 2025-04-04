@@ -1,5 +1,5 @@
-import { renderHook, act } from "@testing-library/react-hooks";
 import { vi, describe, it, expect, beforeEach } from "vitest";
+import { renderHook, act } from "@testing-library/react";
 import { showToast } from "@raycast/api";
 import { useHantenaFullTextSearch, SearchAPI, LIMIT } from "../search";
 
@@ -41,13 +41,15 @@ describe("useHantenaFullTextSearch", () => {
     (mockSearchAPI.search as ReturnType<typeof vi.fn>).mockResolvedValue(mockResponse);
   });
 
-  it("should initialize with default values", () => {
+  it("should initialize with default values", async () => {
     const { result } = renderHook(() => useHantenaFullTextSearch("username", "apikey", mockSearchAPI));
 
-    expect(result.current.bookmarks).toEqual([]);
-    expect(result.current.loading).toBe(false);
-    expect(result.current.hasNextPage).toBe(false);
-    expect(result.current.hasPreviousPage).toBe(false);
+    await act(async () => {
+      expect(result.current.bookmarks).toEqual([]);
+      expect(result.current.loading).toBe(false);
+      expect(result.current.hasNextPage).toBe(false);
+      expect(result.current.hasPreviousPage).toBe(false);
+    });
   });
 
   it("should handle search", async () => {
@@ -57,42 +59,51 @@ describe("useHantenaFullTextSearch", () => {
       await result.current.search("test");
     });
 
-    expect(mockSearchAPI.search).toHaveBeenCalled();
-    expect(result.current.bookmarks).toEqual(mockResponse.bookmarks);
-    expect(mockShowToast).toHaveBeenCalledWith({
-      title: "Search completed",
-      message: `Found ${mockResponse.meta.total} bookmarks`,
-      style: "success",
+    await act(async () => {
+      expect(mockSearchAPI.search).toHaveBeenCalledWith(
+        "https://b.hatena.ne.jp/my/search/json?q=test&limit=20&of=0",
+        "username",
+        "apikey"
+      );
+      expect(result.current.bookmarks).toEqual(mockResponse.bookmarks);
+      expect(mockShowToast).toHaveBeenCalledWith({
+        title: "Search completed",
+        message: `Found ${mockResponse.meta.total} bookmarks`,
+        style: "success",
+      });
     });
   });
 
   it("should handle pagination", async () => {
     const { result } = renderHook(() => useHantenaFullTextSearch("username", "apikey", mockSearchAPI));
 
-    // Initial search
     await act(async () => {
       await result.current.search("test");
     });
 
-    // Test next page
     await act(async () => {
       await result.current.fetchNextPage();
     });
 
-    expect(mockSearchAPI.search).toHaveBeenCalledWith(expect.stringContaining(`of=${LIMIT}`), "username", "apikey");
-
-    // Wait for the state to be updated
     await act(async () => {
-      // 非同期の状態更新を待つ
-      await new Promise((resolve) => setTimeout(resolve, 0));
+      expect(mockSearchAPI.search).toHaveBeenCalledWith(
+        `https://b.hatena.ne.jp/my/search/json?q=test&limit=20&of=${LIMIT}`,
+        "username",
+        "apikey"
+      );
     });
 
-    // Test previous page
     await act(async () => {
       await result.current.fetchPreviousPage();
     });
 
-    expect(mockSearchAPI.search).toHaveBeenCalledWith(expect.stringContaining(`of=0`), "username", "apikey");
+    await act(async () => {
+      expect(mockSearchAPI.search).toHaveBeenCalledWith(
+        "https://b.hatena.ne.jp/my/search/json?q=test&limit=20&of=0",
+        "username",
+        "apikey"
+      );
+    });
   });
 
   it("should handle error", async () => {
@@ -105,29 +116,31 @@ describe("useHantenaFullTextSearch", () => {
       await result.current.search("test");
     });
 
-    expect(mockShowToast).toHaveBeenCalledWith({
-      title: "Search failed",
-      message: `Error: ${error}`,
-      style: "failure",
+    await act(async () => {
+      expect(mockShowToast).toHaveBeenCalledWith({
+        title: "Search failed",
+        message: `Error: ${error}`,
+        style: "failure",
+      });
     });
   });
 
   it("should handle reset", async () => {
     const { result } = renderHook(() => useHantenaFullTextSearch("username", "apikey", mockSearchAPI));
 
-    // Perform search first
     await act(async () => {
       await result.current.search("test");
     });
 
-    // Then reset
-    act(() => {
+    await act(async () => {
       result.current.reset();
     });
 
-    expect(result.current.bookmarks).toEqual([]);
-    expect(result.current.hasNextPage).toBe(false);
-    expect(result.current.hasPreviousPage).toBe(false);
+    await act(async () => {
+      expect(result.current.bookmarks).toEqual([]);
+      expect(result.current.hasNextPage).toBe(false);
+      expect(result.current.hasPreviousPage).toBe(false);
+    });
   });
 
   it("should handle missing credentials", async () => {
@@ -137,11 +150,13 @@ describe("useHantenaFullTextSearch", () => {
       await result.current.search("test");
     });
 
-    expect(mockShowToast).toHaveBeenCalledWith({
-      title: "Empty credentials",
-      message: "Please set your Hatena Bookmark credentials in the settings",
-      style: "failure",
+    await act(async () => {
+      expect(mockShowToast).toHaveBeenCalledWith({
+        title: "Empty credentials",
+        message: "Please set your Hatena Bookmark credentials in the settings",
+        style: "failure",
+      });
+      expect(mockSearchAPI.search).not.toHaveBeenCalled();
     });
-    expect(mockSearchAPI.search).not.toHaveBeenCalled();
   });
 });
