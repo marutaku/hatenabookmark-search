@@ -18,18 +18,31 @@
       "icon": "extension-icon.png"
     },
     {
-      "name": "configure",
-      "title": "Configure",
-      "description": "Configure username and apikey",
-      "mode": "view",
-      "icon": "extension-icon.png"
-    },
-    {
       "name": "hot-entries",
       "title": "Show Hot Entries",
       "description": "Show Hatena Bookmark Hot Entries",
       "mode": "view",
       "icon": "extension-icon.png"
+    }
+  ],
+  "preferences": [
+    {
+      "name": "username",
+      "title": "Username",
+      "description": "Your Hatena Bookmark username",
+      "type": "textfield",
+      "defaultValue": "",
+      "required": true,
+      "placeholder": "Enter your Hatena Bookmark username"
+    },
+    {
+      "name": "apikey",
+      "title": "API Key",
+      "description": "Your Hatena Bookmark API key",
+      "type": "textfield",
+      "defaultValue": "",
+      "required": true,
+      "placeholder": "Enter your Hatena Bookmark API key"
     }
   ],
   "dependencies": {

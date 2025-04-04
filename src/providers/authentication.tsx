@@ -1,7 +1,7 @@
-import { Detail, LocalStorage, ActionPanel, Action } from "@raycast/api";
+import { Detail, ActionPanel, Action } from "@raycast/api";
 import { useState, useEffect } from "react";
-import { API_KEY_STORE_KEY, USER_NAME_STORE_KEY } from "../const";
 import { AuthorizationContext } from "../hooks/auth";
+import { getPreference } from "../lib/preference";
 
 export const AuthorizationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -9,8 +9,7 @@ export const AuthorizationProvider: React.FC<{ children: React.ReactNode }> = ({
   const [apikey, setApikey] = useState<string | undefined>(undefined);
   const fetchAuthenticationData = async () => {
     try {
-      const storedUsername = await LocalStorage.getItem(USER_NAME_STORE_KEY);
-      const storedApikey = await LocalStorage.getItem(API_KEY_STORE_KEY);
+      const { username: storedUsername, apikey: storedApikey } = getPreference();
       setUsername(storedUsername?.toString());
       setApikey(storedApikey?.toString());
     } catch (error) {
