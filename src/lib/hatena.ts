@@ -59,8 +59,6 @@ export const fetchHotEntries = async (category: string = "it"): Promise<HatenaHo
     }
 
     const xmlText = await response.text();
-    console.log("Received XML:", xmlText);
-
     const parser = new XMLParser({
       ignoreAttributes: false,
       attributeNamePrefix: "@_",
@@ -70,7 +68,6 @@ export const fetchHotEntries = async (category: string = "it"): Promise<HatenaHo
     });
 
     const result = parser.parse(xmlText) as HatenaRDFFeed;
-    console.log("Parsed result:", JSON.stringify(result, null, 2));
 
     if (!result["rdf:RDF"] || !Array.isArray(result["rdf:RDF"].item)) {
       console.error("Unexpected RSS format:", result);
@@ -78,7 +75,6 @@ export const fetchHotEntries = async (category: string = "it"): Promise<HatenaHo
     }
 
     const items = result["rdf:RDF"].item;
-    console.log("Processing entries:", items.length);
 
     return items.map((item) => ({
       title: decode(item.title),
@@ -99,7 +95,6 @@ export const callHantenaAPI = async <T>(url: string, username: string, apikey: s
     "X-WSSE": wsseHeader,
     "Content-Type": "application/json",
   };
-  console.log("Request URL:", url);
   const response = await fetch(url, {
     method: "GET",
     headers,
