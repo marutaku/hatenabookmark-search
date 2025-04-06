@@ -4,6 +4,15 @@ import { useHantenaFullTextSearch } from "./hooks/search";
 import { useAuth } from "./hooks/auth";
 import { useState } from "react";
 
+const formatDate = (timestamp: number) => {
+  const date = new Date(timestamp * 1000);
+  return date.toLocaleDateString("ja-JP", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).replace(/\//g, "/");
+};
+
 const SearchList = () => {
   const { username, apikey } = useAuth();
   const [query, setQuery] = useState("");
@@ -31,12 +40,13 @@ const SearchList = () => {
         </ActionPanel>
       }
     >
-      {bookmarks.map(({ entry }) => (
+      {bookmarks.map(({ entry, timestamp }) => (
         <List.Item
           key={entry.eid}
           title={entry.title}
-          subtitle={entry.url}
+          subtitle={`${entry.count} users`}
           icon={Icon.Link}
+          accessories={[{ text: formatDate(timestamp) }]}
           actions={
             <ActionPanel>
               <Action.OpenInBrowser url={entry.url} />
